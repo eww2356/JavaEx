@@ -1,9 +1,7 @@
 # LoggerExample
 JAVA 프로그램에서 log4j 라이브러리를 이용하여 로그 기록 작성하기
 
-+ MainSystem.java - 로거를 호출하여 사용하는 메인 클래스
-+ Log.java - log4j를 이용해 로거를 구성한 클래스
-+ log4j.properties - log4j 설정
+log4j-1.2.15 버전과 log4j-2.17.1 버전을 정리해두었습니다.
 
 ------------
 콘솔 출력 결과
