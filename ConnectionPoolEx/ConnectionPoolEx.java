@@ -243,13 +243,15 @@ public class ConnectionPoolEx {
 				if(res != null) res.close();
 				if(statement != null) statement.close();
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
 			// 연결 놓아주기
 			if (conn != null) {
 				pool.returnConnection(conn);
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			// 모든 연결 닫기
+			closeConnections();
 		}
 	}
 
