@@ -197,7 +197,7 @@ public class ConnectionPoolEx {
 	 * 
 	 * @throws SQLException 
 	 */
-	private static void closeConnections() throws SQLException {
+	public static void closeConnections() throws SQLException {
 		// 미사용 중인 연결 목록에서 연결 삭제하기
 		for (Iterator<Connection> iterator = freePool.iterator(); iterator.hasNext();){
 			Connection conn = (Connection) iterator.next();
