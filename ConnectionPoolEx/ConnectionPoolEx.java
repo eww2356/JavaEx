@@ -14,14 +14,14 @@ public class ConnectionPoolEx {
 	private String userName;
 	private String password;
 	private int maxPoolSize = 10;
-	private int connNum = 0;
+	static private int connNum = 0;
 
 	private static final String SQL_VERIFYCONN = "select 1";
 
 	// 미사용 중인 풀
-	Stack<Connection> freePool = new Stack<>();
+	static Stack<Connection> freePool = new Stack<>();
 	// 사용 중인 풀
-	Set<Connection> occupiedPool = new HashSet<>();
+	static Set<Connection> occupiedPool = new HashSet<>();
 
 	/**
 	 * Constructor
@@ -189,6 +189,27 @@ public class ConnectionPoolEx {
 			return true;
 		} catch (SQLException e) {
 			return false;
+		}
+	}
+	
+	/**
+	 * 모든 연결들을 닫기
+	 * 
+	 * @throws SQLException 
+	 */
+	private static void closeConnections() throws SQLException {
+		// 미사용 중인 연결 목록에서 연결 삭제하기
+		for (Iterator<Connection> iterator = freePool.iterator(); iterator.hasNext();){
+			Connection conn = (Connection) iterator.next();
+			conn.close();
+			iterator.remove();
+		}
+		// 사용 중인 연결 목록에서 연결 삭제하기
+		for (Iterator<Connection> iterator = occupiedPool.iterator(); iterator.hasNext();){
+			Connection conn = (Connection) iterator.next();
+			connNum--;
+			conn.close();
+			iterator.remove();
 		}
 	}
 	
