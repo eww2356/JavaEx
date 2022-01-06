@@ -27,4 +27,4 @@ SHOW STATUS WHERE variable_name IN (
 ```
 
 
-코드 출처 : https://docs.microsoft.com/ko-kr/azure/mysql/sample-scripts-java-connection-pooling
+참고 자료 : https://docs.microsoft.com/ko-kr/azure/mysql/sample-scripts-java-connection-pooling
