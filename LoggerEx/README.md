@@ -12,7 +12,7 @@ log4j-1.2.15 버전과 log4j-2.17.1 버전을 정리해두었습니다.
 
 - log4j-2.17.1 버전
 
-  ![image](https://user-images.githubusercontent.com/45067949/148172431-08d4f533-b45e-489e-9a70-45e0f563dd22.png)
+  ![image](https://user-images.githubusercontent.com/45067949/148476033-d48ec119-fbef-44a9-8c4c-3f21315f934b.png)
 
 파일 출력 결과(data.log)
 
