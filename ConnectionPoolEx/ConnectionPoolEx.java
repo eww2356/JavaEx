@@ -13,7 +13,8 @@ public class ConnectionPoolEx {
 	private String databaseUrl;
 	private String userName;
 	private String password;
-	private int maxPoolSize = 10;
+	private int maxPoolSize = 10;	// 최대 풀 크기
+	private int maxWaitTime = 30 * 1000;	// 커넥션 풀에서 사용 기능한 커넥션이 없을 때 커넥션을 최대로 대기하는 시간(초)
 	static private int connNum = 0;
 
 	private static final String SQL_VERIFYCONN = "select 1";
@@ -34,13 +35,16 @@ public class ConnectionPoolEx {
 	 *            password
 	 * @param maxSize
 	 *            max size of the connection pool
+	 * @param maxWait
+	 *            커넥션 풀에서 사용 기능한 커넥션이 없을 때 커넥션을 최대로 대기하는 시간(초)
 	 */
 	public ConnectionPoolEx(String databaseUrl, String userName,
-			String password, int maxSize) {
+			String password, int maxSize, int maxWait) {
 		this.databaseUrl = databaseUrl;
 		this.userName = userName;
 		this.password = password;
 		this.maxPoolSize = maxSize;
+		this.maxWaitTime = maxWait * 1000;
 	}
 
 	/**
@@ -55,7 +59,24 @@ public class ConnectionPoolEx {
 		Connection conn = null;
 
 		if (isFull()) {
-			throw new SQLException("The connection pool is full.");
+			long startWaitTime = System.currentTimeMillis();
+			while(true) {
+				//System.out.println("[" + Thread.currentThread().getName() + "] 사용하지 않는 데이터베이스 커넥션 객체가 없어 대기함");
+				long endWaitTime = System.currentTimeMillis();
+				if (maxWaitTime > 0 && (endWaitTime - startWaitTime) >= maxWaitTime) {	// 대기 시간이 초과된 경우
+					System.out.println("[" + Thread.currentThread().getName() + "] 대기 시간(" + ((endWaitTime - startWaitTime) / 1000) + "s)이 초과되어 데이터베이스 커넥션 객체 가져오기를 중지함");
+					throw new SQLException("The connection pool is full.");
+				} else {
+					if (!isFull()) {	// 사용가능한 커넥션이 생겼을 경우
+						break;
+					}
+					try {
+						Thread.sleep(100);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
 		}
 
 		conn = getConnectionFromPool();
@@ -224,7 +245,7 @@ public class ConnectionPoolEx {
 		// 커넥션 풀 객체 생성
 		ConnectionPoolEx pool = new ConnectionPoolEx(
 				"jdbc:mariadb://(주소):(포트)/(DB명)",
-				"(사용자 ID)", "(사용자 비밀번호)", 2);
+				"(사용자 ID)", "(사용자 비밀번호)", 2, 30);
 		
 		try {
 			// 연결 가져오기
