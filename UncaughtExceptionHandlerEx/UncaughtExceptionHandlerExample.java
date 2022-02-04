@@ -14,10 +14,10 @@ public class UncaughtExceptionHandlerExample {
 		System.out.println("UncaughtExceptionHandlerExample 시작 - " + Thread.currentThread().getName());
 		
 		// 서비스가 종료될 때 실행될 문장
-		Runtime.getRuntime().addShutdownHook(new Thread() {
+		Runtime.getRuntime().addShutdownHook(new Thread("ShutDown") {
 		    public void run() {
-			System.out.println("JVM은 종료중...");
-			System.out.println("["+Thread.currentThread().getName()+"] ShutDown");
+			System.out.println("["+Thread.currentThread().getName()+"] Called");
+			System.out.println("JVM 종료...");
 		    }
 		});
 
