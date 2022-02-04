@@ -26,7 +26,7 @@ public class UncaughtExceptionHandlerExample {
             @Override
             public void uncaughtException(Thread thread, Throwable e) {
                 //System.out.println("DefaultUncaughtExceptionHanlder / " + thread + " throws exception: "+ e);
-                logger.error("DefaultUncaughtExceptionHanlder / " + thread + " throws exception: ", e);
+                logger.error("\nDefaultUncaughtExceptionHanlder / " + thread + " throws exception: ", e);
             }
         });
 		
