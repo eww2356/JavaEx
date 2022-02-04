@@ -5,4 +5,4 @@ JAVA 프로그램에서 잡히지 않은 예외 처리기 만들기
 
 ------------
 콘솔 출력 결과
-![image](https://user-images.githubusercontent.com/45067949/152488979-99fd9c7c-c638-40fa-a02f-6880511155af.png)
+![image](https://user-images.githubusercontent.com/45067949/152491193-334fe0a4-0431-411f-a9dc-f7716fdfa0d6.png)
