@@ -12,12 +12,19 @@ public class MakeExceptionThread extends Thread {
 	public void run() {
 		System.out.println("ThrowException 시작 - " + Thread.currentThread().getName());
 		
+		// 처리된 예외
+		try {
+			String msg = "hoho";
+			msg = msg.substring(5);
+		} catch (Exception e) {
+           		UncaughtExceptionHandlerExample.logger.error("\nCatch : ", e);
+		}
+
+		// 처리되지 않은 에러 만들기
+		//throw new RuntimeException();
 		// StringIndexOutOfBoundsException 만들기 위한 코드
 		String msg = "sksk";
 		msg = msg.substring(6);
-
-		// 에러 만들어보기
-		//throw new RuntimeException();
 		
 		//System.out.println("ThrowException 끝 " + Thread.currentThread().getName());
 	}
