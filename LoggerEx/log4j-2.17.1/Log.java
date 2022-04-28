@@ -4,30 +4,24 @@ import java.io.File;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.core.LoggerContext;
 
 public class Log {
 	// 로거 생성
-	public static Logger log =  LogManager.getLogger(Log.class);
-	File log4j2Properties = new File("config/log4j2.properties");
+	public static Logger log;
 	// 로그 저장할 경로
 	public static final String OS = System.getProperty("os.name").toLowerCase();
 	public static final String win_path = "c:/projectPath";
 	public static final String linux_path = "/home/User/projectPath";
 	
 	public Log() {
-		LoggerContext loggerContext = (LoggerContext) LogManager.getContext(false);
-		
 		// OS에 따른 log 기록 경로 가변 수정
 		if (OS.indexOf("win") >= 0){
 			System.setProperty("logFilename", win_path);
 		}else{
 			System.setProperty("logFilename", linux_path);
 		}
-		// log4j2 설정 경로
-		loggerContext.setConfigLocation(log4j2Properties.toURI());
-		// log4j2 설정 반영
-		loggerContext.reconfigure();
+		
+		log = LogManager.getLogger(Log.class);
 	}
 	
 	// DEBUG 레벨이 너무 광범위한 것을 해결하기 위해서 좀 더 상세한 상태를 나타냄
